@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Book {
@@ -13,32 +14,35 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
  
-    @Column(nullable = false)
     private String genre;
  
-    @Column(nullable = false)
+    @NotNull
     private String author;
     
-    @Column(nullable = false)
+    @NotNull
     private String image;
     
-    @Column(nullable = false)
+    @NotNull
     private String title;
     
-    @Column(nullable = false)
+    @NotNull
     private String subtitle;
     
-    @Column(nullable = false)
+    @NotNull
     private String publisher;
-    	@Column(nullable = false)
+    
+    @NotNull
     private String year;
     
-    @Column(nullable = false)
+    @NotNull
     private int pages;
     
-    @Column(nullable = false)
+    @NotNull
     private String isbn;
-     
+
+    public Book() {
+    }
+  
     public Book(Long id, String genre, String author, String image, String title, String publisher, String year, int pages, String isbn)
     {
     	this.id = id;
@@ -55,10 +59,6 @@ public class Book {
 
     public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getGenre() {
