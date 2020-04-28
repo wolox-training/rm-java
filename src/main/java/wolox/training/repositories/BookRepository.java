@@ -1,10 +1,11 @@
 package wolox.training.repositories;
-import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import wolox.training.models.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-	  List<Book> findFirst1ByAuthorOrderByIdAsc(String author);
+	  Optional<Book> findFirstByAuthorOrderByIdAsc(String author);
 
 	}
