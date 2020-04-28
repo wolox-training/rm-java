@@ -5,6 +5,6 @@ import wolox.training.models.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-	  List<Book> findFirstByOrderByIdgitAsc(String author);
+	  List<Book> findFirst1ByAuthorOrderByIdAsc(String author);
 
 	}
