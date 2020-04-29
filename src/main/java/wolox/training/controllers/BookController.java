@@ -39,9 +39,10 @@ public class BookController {
         return bookRepository.findAll();
     }
 	
-	@GetMapping("/author/{bookAuthor}")
-    public Optional<Book> findByAuthor(@PathVariable String bookAuthor) {
-        return bookRepository.findFirstByAuthorOrderByIdAsc(bookAuthor);
+	@GetMapping("/")
+	@RequestMapping(params = "author")
+    public Optional<Book> findByAuthor(@RequestParam(required = true) String author) {
+        return bookRepository.findFirstByAuthorOrderByIdAsc(author);
     }
  
     @GetMapping("/{id}")
