@@ -1,10 +1,17 @@
 package wolox.training.models;
 
+import java.util.Collections;
+import java.util.List;
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Book {
@@ -39,10 +46,14 @@ public class Book {
     @NotNull
     private String isbn;
 
+   @JsonIgnore
+   @ManyToMany()
+   private List<User> users;
+    
     public Book() {
     }
   
-    public Book(Long id, String genre, String author, String image, String title, String subtitle ,String publisher, String year, int pages, String isbn)
+    public Book(Long id, String genre, String author, String image, String title, String subtitle ,String publisher, String year, int pages, String isbn, User user)
     {
     	this.id = id;
     	this.genre = genre;
@@ -54,6 +65,7 @@ public class Book {
     	this.year = year;
     	this.pages = pages;
     	this.isbn = isbn;
+    	this.users = Collections.emptyList();
     }
     
 
