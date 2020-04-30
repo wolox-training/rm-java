@@ -86,7 +86,7 @@ public class User {
 	}
 
 	public void addBook(Book book) {
-		if (this.books.contains(book) == false) {
+		if (!this.books.contains(book)) {
 			this.books.add(book);
 		} else {
 			throw new BookNotFoundException("Libro " + book.getTitle() + " ya existente para el usuario");
@@ -94,7 +94,7 @@ public class User {
 	}
 
 	public void removeBook(Book book) {
-		if (this.books.remove(book) == false) {
+		if (!this.books.remove(book)) {
 			throw new BookNotFoundException("No hay libro para el id " + book.getId());
 		}
 	}
