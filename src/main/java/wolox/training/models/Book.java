@@ -42,13 +42,14 @@ public class Book {
     public Book() {
     }
   
-    public Book(Long id, String genre, String author, String image, String title, String publisher, String year, int pages, String isbn)
+    public Book(Long id, String genre, String author, String image, String title, String subtitle ,String publisher, String year, int pages, String isbn)
     {
     	this.id = id;
     	this.genre = genre;
     	this.author = author;
     	this.image = image;
     	this.title = title;
+    	this.subtitle = subtitle;
     	this.publisher = publisher;
     	this.year = year;
     	this.pages = pages;
