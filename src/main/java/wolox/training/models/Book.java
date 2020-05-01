@@ -47,7 +47,7 @@ public class Book {
     private String isbn;
 
    @JsonIgnore
-   @ManyToMany()
+   @ManyToMany(mappedBy= "books")
    private List<User> users;
     
     public Book() {
