@@ -3,6 +3,7 @@ package wolox.training;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -93,4 +94,16 @@ public class BookRepositoryTest {
 		assertThat(found.size()).isEqualTo(4);
 
 	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void whenCreateBook_thenReturnNotFound() throws Exception {
+
+		// when
+		Optional<Book> found = bookRepository.findFirstByAuthorOrderByIdAsc("WulfqQ DornQ");
+
+		// then
+		assertThat(found.get().getTitle()).isEqualTo("Phobia");
+
+	}
+
 }
