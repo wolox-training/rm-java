@@ -96,7 +96,7 @@ public class BookRepositoryTest {
 	}
 
 	@Test(expected = NoSuchElementException.class)
-	public void whenCreateBook_thenReturnNotFound() throws Exception {
+	public void whenFindByAuthor_thenReturnNoElements() throws Exception {
 
 		// when
 		Optional<Book> found = bookRepository.findFirstByAuthorOrderByIdAsc("WulfqQ DornQ");
