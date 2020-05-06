@@ -1,6 +1,7 @@
 package wolox.training.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,16 +35,15 @@ public class User {
 
 	@ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE })
 	@JoinTable(name = "user_book", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
-	private List<Book> books;
+	private List<Book> books = new ArrayList<Book>() ;
 
 	public long getId() {
 		return id;
 	}
 
-	public User(long id, @NotNull String username, @NotNull String name, @NotNull LocalDate birthdate,
+	public User(@NotNull String username, @NotNull String name, @NotNull LocalDate birthdate,
 	        @NotNull List<Book> books) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.name = name;
 		this.birthdate = birthdate;
@@ -89,13 +89,13 @@ public class User {
 		if (!this.books.contains(book)) {
 			this.books.add(book);
 		} else {
-			throw new BookNotFoundException("Libro " + book.getTitle() + " ya existente para el usuario");
+			throw new BookNotFoundException("Libro " + book.getTitle() + " ya existente para el usuario " + this.getId());
 		}
 	}
 
-	public void removeBook(Book book) {
+	public void removeBook(Book book) {		
 		if (!this.books.remove(book)) {
-			throw new BookNotFoundException("No hay libro para el id " + book.getId());
+			throw new BookNotFoundException("No hay libro con id " + book.getId() + " para el usuario " + this.getId());
 		}
 	}
 

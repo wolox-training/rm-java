@@ -47,15 +47,14 @@ public class Book {
     private String isbn;
 
    @JsonIgnore
-   @ManyToMany()
+   @ManyToMany(mappedBy= "books")
    private List<User> users;
     
     public Book() {
     }
   
-    public Book(Long id, String genre, String author, String image, String title, String subtitle ,String publisher, String year, int pages, String isbn, User user)
+    public Book(String genre, String author, String image, String title, String subtitle ,String publisher, String year, int pages, String isbn)
     {
-    	this.id = id;
     	this.genre = genre;
     	this.author = author;
     	this.image = image;
