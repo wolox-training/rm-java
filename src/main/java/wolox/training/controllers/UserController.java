@@ -52,7 +52,6 @@ public class UserController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public User create(@RequestBody User user) {
-		System.out.println(user);
 		return userRepository.save(user);
 	}
 
