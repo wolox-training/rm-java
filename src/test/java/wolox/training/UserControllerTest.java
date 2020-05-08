@@ -2,7 +2,7 @@ package wolox.training;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -136,22 +136,75 @@ public class UserControllerTest {
 
 		ObjectMapper mp = new ObjectMapper();
 
-//		Mockito.when(mockUserRepository.findById(any())).thenReturn(Optional.of(juanCarlos));
-//		Mockito.when(mockBookRepository.findById(any())).thenReturn(Optional.of(laPsiquiatra));
-//		Mockito.when(mockUserRepository.save(any())).thenReturn(juanCarlos);
+		Mockito.when(mockUserRepository.findById(any())).thenReturn(Optional.of(juanCarlos));
+		Mockito.when(mockBookRepository.findById(any())).thenReturn(Optional.of(laPsiquiatra));
 
-		given(mockUserRepository.findById(any())).willReturn(Optional.of(juanCarlos));
-		given(mockBookRepository.findById(any())).willReturn(Optional.of(laPsiquiatra));
 		User juanCarlosB = new User("JuanCarlos", "Juan Carlos", ld);
 		List<Book> books = new ArrayList<Book>();
 		books.add(laPsiquiatra);
 		juanCarlosB.setBooks(books);
 
-		given(mockUserRepository.save(any())).willReturn(juanCarlosB);
+		Mockito.when(mockUserRepository.save(any())).thenReturn(juanCarlosB);
 
 		mvc.perform(post("/api/users/1/books/2").contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
 		        .content(mp.writeValueAsString(juanCarlos))).andDo(print()).andExpect(status().isOk())
-		        .andExpect(jsonPath("$.username").value("JuanCarlos"));
+		        .andExpect(jsonPath("$.books.[0].title").value("La Psiquiatra"));
+	}
+
+	@Test
+	@Order(7)
+	public void whenPostUserRemoveBook_thenReturnOk() throws Exception {
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate ld = LocalDate.parse("2000-01-01", formatter);
+		User juanCarlos = new User("JuanCarlos", "Juan Carlos", ld);
+
+		Book laPsiquiatra = new Book("Thriller", "Wulf Dorn", "laPsiquiatra.JPG", "La Psiquiatra", "--", "??", "1990",
+		        400, "1122334455667782");
+
+		User juanCarlosB = new User("JuanCarlos", "Juan Carlos", ld);
+
+		List<Book> books = new ArrayList<Book>();
+		books.add(laPsiquiatra);
+		juanCarlosB.setBooks(books);
+
+		Mockito.when(mockUserRepository.findById(any())).thenReturn(Optional.of(juanCarlosB));
+		Mockito.when(mockBookRepository.findById(any())).thenReturn(Optional.of(laPsiquiatra));
+
+		Mockito.when(mockUserRepository.save(any())).thenReturn(juanCarlos);
+
+		ObjectMapper mp = new ObjectMapper();
+
+		mvc.perform(delete("/api/users/1/books/1").contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+		        .content(mp.writeValueAsString(juanCarlosB))).andDo(print()).andExpect(status().isOk());
+	}
+
+	@Test
+	@Order(8)
+	public void whenPostUserRemoveBook_thenReturnBookNotFound() throws Exception {
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate ld = LocalDate.parse("2000-01-01", formatter);
+
+		Book laPsiquiatra = new Book("Thriller", "Wulf Dorn", "laPsiquiatra.JPG", "La Psiquiatra", "--", "??", "1990",
+		        400, "1122334455667782");
+
+		User juanCarlosB = new User("JuanCarlos", "Juan Carlos", ld);
+
+		List<Book> books = new ArrayList<Book>();
+		books.add(laPsiquiatra);
+		juanCarlosB.setBooks(books);
+
+		Mockito.when(mockUserRepository.findById(any())).thenReturn(Optional.of(juanCarlosB));
+		Mockito.when(mockBookRepository.findById(2L)).thenReturn(Optional.empty());
+
+		Mockito.when(mockUserRepository.save(any())).thenReturn(Optional.empty());
+
+		ObjectMapper mp = new ObjectMapper();
+
+		mvc.perform(delete("/api/users/2/books/1").contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8")
+		        .content(mp.writeValueAsString(juanCarlosB))).andDo(print()).andExpect(status().isNotFound())
+		        .andExpect(content().string("No hay libro para el id 2"));
 	}
 
 }

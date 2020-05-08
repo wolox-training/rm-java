@@ -50,7 +50,6 @@ public class User {
 		this.username = username;
 		this.name = name;
 		this.birthdate = birthdate;
-		this.books = Collections.emptyList();
 		;
 	}
 
@@ -82,8 +81,7 @@ public class User {
 	}
 
 	public List<Book> getBooks() {
-		return this.books;
-		// return (List<Book>) Collections.unmodifiableList(books);
+		return (List<Book>) Collections.unmodifiableList(books);
 	}
 
 	public void setBooks(List<Book> books) {
@@ -92,11 +90,7 @@ public class User {
 
 	public void addBook(Book book) {
 		if (!this.books.contains(book)) {
-			try {
-				this.books.add(book);
-			} catch (Exception e) {
-				System.out.println(e);
-			}
+			this.books.add(book);
 		} else {
 			throw new BookNotFoundException(
 			        "Libro " + book.getTitle() + " ya existente para el usuario " + this.getId());

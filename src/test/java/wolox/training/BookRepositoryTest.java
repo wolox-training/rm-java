@@ -70,7 +70,7 @@ public class BookRepositoryTest {
 	public void whenCreateBook_thenBookIsPersisted() throws Exception {
 
 		// when
-		Optional<Book> found = bookRepository.findById(1L);
+		Optional<Book> found = bookRepository.findFirstByAuthorOrderByIdAsc("Edgar Allan Poe");
 
 		// then
 		assertThat(found.get().getAuthor()).isEqualTo("Edgar Allan Poe");
@@ -82,7 +82,7 @@ public class BookRepositoryTest {
 		assertThat(found.get().getYear()).isEqualTo("1940");
 		assertThat(found.get().getPages()).isEqualTo(304);
 		assertThat(found.get().getIsbn()).isEqualTo("1122334455667789");
-		assertThat(found.get().getId()).isEqualTo(1L);
+
 	}
 
 	@Test
