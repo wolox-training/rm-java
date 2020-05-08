@@ -50,7 +50,6 @@ public class UserControllerTest {
 	public void setUp() {
 	}
 
-//GET
 	@Test
 	@Order(1)
 	public void whenGetUserById_thenJsonArray() throws Exception {
@@ -105,8 +104,6 @@ public class UserControllerTest {
 		mvc.perform(get("/api/users?username=Pepe")).andExpect(content().string("No hay usuario para el username Pepe"))
 		        .andExpect(status().isNotFound());
 	}
-
-//POST
 
 	@Test
 	@Order(5)
@@ -196,7 +193,7 @@ public class UserControllerTest {
 		juanCarlosB.setBooks(books);
 
 		Mockito.when(mockUserRepository.findById(any())).thenReturn(Optional.of(juanCarlosB));
-		Mockito.when(mockBookRepository.findById(2L)).thenReturn(Optional.empty());
+		Mockito.when(mockBookRepository.findById(any())).thenReturn(Optional.empty());
 
 		Mockito.when(mockUserRepository.save(any())).thenReturn(Optional.empty());
 
