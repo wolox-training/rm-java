@@ -15,6 +15,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import wolox.training.exceptions.BookNotFoundException;
 
 @Entity
@@ -31,6 +34,7 @@ public class User {
 	private String name;
 
 	@NotNull
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate birthdate;
 
 	@ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE })
@@ -78,7 +82,8 @@ public class User {
 	}
 
 	public List<Book> getBooks() {
-		return (List<Book>) Collections.unmodifiableList(books);
+		return this.books;
+		// return (List<Book>) Collections.unmodifiableList(books);
 	}
 
 	public void setBooks(List<Book> books) {
@@ -87,7 +92,11 @@ public class User {
 
 	public void addBook(Book book) {
 		if (!this.books.contains(book)) {
-			this.books.add(book);
+			try {
+				this.books.add(book);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 		} else {
 			throw new BookNotFoundException(
 			        "Libro " + book.getTitle() + " ya existente para el usuario " + this.getId());
