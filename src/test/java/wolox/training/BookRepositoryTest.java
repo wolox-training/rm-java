@@ -3,21 +3,17 @@ package wolox.training;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import wolox.training.models.Book;
 import wolox.training.repositories.BookRepository;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 
 public class BookRepositoryTest {
@@ -28,7 +24,7 @@ public class BookRepositoryTest {
 	@Autowired
 	private TestEntityManager entityManager;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		// given
 
@@ -95,15 +91,13 @@ public class BookRepositoryTest {
 
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void whenFindByAuthor_thenReturnNoElements() throws Exception {
 
 		// when
 		Optional<Book> found = bookRepository.findFirstByAuthorOrderByIdAsc("WulfqQ DornQ");
 
 		// then
-		assertThat(found.get().getTitle()).isEqualTo("Phobia");
-
+		assertThat(!found.isPresent());
 	}
-
 }
