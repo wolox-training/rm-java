@@ -50,7 +50,6 @@ public class User {
 		this.username = username;
 		this.name = name;
 		this.birthdate = birthdate;
-		;
 	}
 
 	public User() {
