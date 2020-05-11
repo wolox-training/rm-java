@@ -10,10 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import wolox.training.exceptions.BookNotFoundException;
 
@@ -31,25 +34,24 @@ public class User {
 	private String name;
 
 	@NotNull
+	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate birthdate;
 
 	@ManyToMany(cascade = { CascadeType.REFRESH, CascadeType.MERGE })
 	@JoinTable(name = "user_book", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
-	private List<Book> books = new ArrayList<Book>() ;
+	private List<Book> books = new ArrayList<Book>();
 
 	public long getId() {
 		return id;
 	}
 
-	public User(@NotNull String username, @NotNull String name, @NotNull LocalDate birthdate,
-	        @NotNull List<Book> books) {
+	public User(@NotNull String username, @NotNull String name, @NotNull LocalDate birthdate) {
 		super();
 		this.username = username;
 		this.name = name;
 		this.birthdate = birthdate;
-		this.books = Collections.emptyList();;
 	}
-	
+
 	public User() {
 	}
 
@@ -89,15 +91,15 @@ public class User {
 		if (!this.books.contains(book)) {
 			this.books.add(book);
 		} else {
-			throw new BookNotFoundException("Libro " + book.getTitle() + " ya existente para el usuario " + this.getId());
+			throw new BookNotFoundException(
+			        "Libro " + book.getTitle() + " ya existente para el usuario " + this.getId());
 		}
 	}
 
-	public void removeBook(Book book) {		
+	public void removeBook(Book book) {
 		if (!this.books.remove(book)) {
 			throw new BookNotFoundException("No hay libro con id " + book.getId() + " para el usuario " + this.getId());
 		}
 	}
-
 
 }
