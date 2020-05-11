@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -45,10 +44,6 @@ public class UserControllerTest {
 
 	@MockBean
 	private BookRepository mockBookRepository;
-
-	@Before
-	public void setUp() {
-	}
 
 	@Test
 	@Order(1)
@@ -203,5 +198,4 @@ public class UserControllerTest {
 		        .content(mp.writeValueAsString(juanCarlosB))).andDo(print()).andExpect(status().isNotFound())
 		        .andExpect(content().string("No hay libro para el id 2"));
 	}
-
 }

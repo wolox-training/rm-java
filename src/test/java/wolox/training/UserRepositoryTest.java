@@ -7,22 +7,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import wolox.training.models.Book;
 import wolox.training.models.User;
 import wolox.training.repositories.UserRepository;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
-
 public class UserRepositoryTest {
 
 	@Autowired
@@ -31,7 +27,7 @@ public class UserRepositoryTest {
 	@Autowired
 	private TestEntityManager entityManager;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		// given
 
@@ -116,5 +112,4 @@ public class UserRepositoryTest {
 		assertThat(!found.isPresent());
 
 	}
-
 }
