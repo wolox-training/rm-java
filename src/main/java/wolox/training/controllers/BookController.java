@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import wolox.training.OpenLibraryService;
 import wolox.training.exceptions.BookIdMismatchException;
 import wolox.training.exceptions.BookNotFoundException;
 import wolox.training.models.Book;
-import wolox.training.models.OpenLibraryBook;
 import wolox.training.repositories.BookRepository;
+import wolox.training.service.OpenLibraryService;
 
 @RestController
 @RequestMapping("/api/books")
@@ -77,15 +77,18 @@ public class BookController {
 
 	@GetMapping("/")
 	@RequestMapping(params = "isbn")
-	public Optional<OpenLibraryBook> findByIsbn(@RequestParam(required = true) String isbn) {
+	public ResponseEntity<Book> findByIsbn(@RequestParam(required = true) String isbn) {
 
-		OpenLibraryService ol = new OpenLibraryService();
 		Optional<Book> b = bookRepository.findFirstByIsbnOrderByIdAsc(isbn);
+		Book book = new Book();
+
 		if (b.isPresent()) {
-			Book bb = b.orElseThrow(() -> new BookNotFoundException("Error de consistencia para el ISBN: " + isbn));
-			return ol.mapBookInfo(bb);
+			book = b.get();
+			return ResponseEntity.status(HttpStatus.OK).body(book);
 		} else {
-			return ol.bookInfo(isbn);
+			OpenLibraryService o = new OpenLibraryService();
+			book = o.bookInfo(isbn).orElseThrow(() -> new BookNotFoundException("No hay libro para el isbn " + isbn));
+			return ResponseEntity.status(HttpStatus.CREATED).body(bookRepository.save(book));
 		}
 	}
 }
