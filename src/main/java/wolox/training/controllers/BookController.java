@@ -49,6 +49,14 @@ public class BookController {
         return bookRepository.findFirstByAuthorOrderByIdAsc(author);
     }
 
+    @GetMapping
+    @RequestMapping(params = {"publisher", "genre", "year"})
+    public Iterable<Book> findByPublisherGenreYear(@RequestParam(required = true) String publisher,
+            @RequestParam(required = true) String genre,
+            @RequestParam(required = true) String year) {
+        return bookRepository.findAllByPublisherAndGenreAndYear(publisher, genre, year);
+    }
+
     @GetMapping("/{id}")
     public Book findOne(@PathVariable Long id) {
         return bookRepository.findById(id)
