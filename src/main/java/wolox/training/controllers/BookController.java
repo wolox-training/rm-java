@@ -3,6 +3,7 @@ package wolox.training.controllers;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import wolox.training.exceptions.BookIdMismatchException;
 import wolox.training.exceptions.BookNotFoundException;
 import wolox.training.models.Book;
 import wolox.training.repositories.BookRepository;
+import wolox.training.service.OpenLibraryService;
 
 @RestController
 @RequestMapping("/api/books")
@@ -33,6 +35,8 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private OpenLibraryService openLibraryService;
 
     @GetMapping
     public Iterable<Book> findAll() {
@@ -82,4 +86,20 @@ public class BookController {
         return bookRepository.save(book);
     }
 
+    @GetMapping
+    @RequestMapping(params = "isbn")
+    public ResponseEntity<Book> findByIsbn(@RequestParam(required = true) String isbn) {
+
+        Optional<Book> bookOptional = bookRepository.findFirstByIsbnOrderByIdAsc(isbn);
+        Book book = new Book();
+
+        if (bookOptional.isPresent()) {
+            book = bookOptional.get();
+            return ResponseEntity.status(HttpStatus.OK).body(book);
+        } else {
+            book = openLibraryService.bookInfo(isbn).orElseThrow(
+                    () -> new BookNotFoundException("No hay libro para el isbn " + isbn));
+            return ResponseEntity.status(HttpStatus.CREATED).body(bookRepository.save(book));
+        }
+    }
 }

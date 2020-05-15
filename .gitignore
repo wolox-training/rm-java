@@ -59,8 +59,9 @@ local.properties
 .scala_dependencies
 .worksheet
 
-# VS
+# VSCode
 .vscode
+
 ### Eclipse Patch ###
 # Eclipse Core
 .project

@@ -1,8 +1,6 @@
 package wolox.training.models;
 
-import java.util.Collections;
 import java.util.List;
-
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,60 +13,58 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Book {
-  
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
- 
-    private String genre;
- 
-    @NotNull
-    private String author;
-    
-    @NotNull
-    private String image;
-    
-    @NotNull
-    private String title;
-    
-    @NotNull
-    private String subtitle;
-    
-    @NotNull
-    private String publisher;
-    
-    @NotNull
-    private String year;
-    
-    @NotNull
-    private int pages;
-    
-    @NotNull
-    private String isbn;
 
-   @JsonIgnore
-   @ManyToMany(mappedBy= "books")
-   private List<User> users;
-    
-    public Book() {
-    }
-  
-    public Book(String genre, String author, String image, String title, String subtitle ,String publisher, String year, int pages, String isbn)
-    {
-    	this.genre = genre;
-    	this.author = author;
-    	this.image = image;
-    	this.title = title;
-    	this.subtitle = subtitle;
-    	this.publisher = publisher;
-    	this.year = year;
-    	this.pages = pages;
-    	this.isbn = isbn;
-    	this.users = Collections.emptyList();
-    }
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    public long getId() {
+	private String genre;
+
+	@NotNull
+	private String author;
+
+	@NotNull
+	private String image;
+
+	@NotNull
+	private String title;
+
+	@NotNull
+	private String subtitle;
+
+	@NotNull
+	private String publisher;
+
+	@NotNull
+	private String year;
+
+	@NotNull
+	private int pages;
+
+	@NotNull
+	private String isbn;
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "books")
+	private List<User> users;
+
+	public Book() {
+	}
+
+	public Book(String genre, String author, String image, String title, String subtitle, String publisher, String year,
+	        int pages, String isbn) {
+		this.genre = genre;
+		this.author = author;
+		this.image = image;
+		this.title = title;
+		this.subtitle = subtitle;
+		this.publisher = publisher;
+		this.year = year;
+		this.pages = pages;
+		this.isbn = isbn;
+	}
+
+	public long getId() {
 		return id;
 	}
 
@@ -131,7 +127,7 @@ public class Book {
 	public int getPages() {
 		return pages;
 	}
-	
+
 	public void setPages(int pages) {
 		this.pages = pages;
 	}
@@ -143,6 +139,5 @@ public class Book {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-    
-    
+
 }
