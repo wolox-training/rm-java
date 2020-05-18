@@ -1,0 +1,19 @@
+
+J
+java:S2201K"/The return value of "orElseThrow" must be used.(ÐÀÙåøÿÿÿÿ
+[
+java:S4684D"@Replace this persistent entity with a simple POJO or DTO object.(ÉÛºõúÿÿÿÿ
+V
+java:S4684P"@Replace this persistent entity with a simple POJO or DTO object.(ÊÄƒ¦
+Y
+java:S3752Z">Add a "method" parameter to this "@RequestMapping" annotation.(·‹”üÿÿÿÿ
+Y
+java:S3752/">Add a "method" parameter to this "@RequestMapping" annotation.(ºš˜ˆúÿÿÿÿ
+S
+java:S1854^"8Remove this useless assignment to local variable "book".(·ç…áþÿÿÿÿ
+J
+java:S2201U"/The return value of "orElseThrow" must be used.(ÐÀÙåøÿÿÿÿ
+t
+java:S1192?"YDefine a constant instead of duplicating this literal "No hay libro para el id " 4 times.(ÐÀÙåøÿÿÿÿ
+Y
+java:S37525">Add a "method" parameter to this "@RequestMapping" annotation.(½·÷¼ûÿÿÿÿ
