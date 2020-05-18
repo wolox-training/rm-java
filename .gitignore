@@ -63,10 +63,10 @@ local.properties
 .vscode
 
 # Idea
-.idea/
+.idea
+*.iws
 *.iml
-.idea/**
-*.idea
+*.ipr
 
 ### Eclipse Patch ###
 # Eclipse Core
