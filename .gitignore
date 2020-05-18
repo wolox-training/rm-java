@@ -65,6 +65,8 @@ local.properties
 # Idea
 .idea/
 *.iml
+.idea/**
+*.idea
 
 ### Eclipse Patch ###
 # Eclipse Core
