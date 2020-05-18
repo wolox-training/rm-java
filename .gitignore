@@ -62,6 +62,10 @@ local.properties
 # VSCode
 .vscode
 
+# Idea
+.idea/
+*.iml
+
 ### Eclipse Patch ###
 # Eclipse Core
 .project
