@@ -45,18 +45,14 @@ public class UserController {
 
     }
 
-    @GetMapping
-    @RequestMapping(params = {"birthdateIni", "birthdateEnd", "name"})
-
+    @GetMapping("/find")
     public Iterable<User> findByBirthdateAndName(
-            @RequestParam(required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate birthdateIni,
-            @RequestParam(required = true) @DateTimeFormat(iso = ISO.DATE) LocalDate birthdateEnd,
-            @RequestParam(required = true) String name) {
+            @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate birthdateIni,
+            @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate birthdateEnd,
+            @RequestParam(required = false) String name) {
         return userRepository.findAllByBirthdateBetweenAndNameIgnoreCaseContaining(birthdateIni,
                 birthdateEnd, name);
-
     }
-
 
     @GetMapping("/{id}")
     public User findOne(@PathVariable Long id) {
