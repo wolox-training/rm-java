@@ -111,11 +111,18 @@ public class BookController {
         @RequestParam(required = false) String subtitle,
         @RequestParam(required = false) String publisher,
         @RequestParam(required = false) String year,
-        @RequestParam(required = false) int pages,
+        @RequestParam(required = false, defaultValue = "") String pages,
         @RequestParam(required = false) String isbn
 
     ) {
-        return bookRepository.findAll(genre,author,image,title,subtitle,publisher,year,pages,isbn);
+        int iPages;
+        try{
+            iPages = Integer.decode(pages);
+        } catch(NumberFormatException ex){
+            iPages = 0;
+        }
+
+        return bookRepository.findAll(genre,author,image,title,subtitle,publisher,year,iPages,isbn);
     }
 
 }

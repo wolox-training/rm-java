@@ -15,11 +15,15 @@ public interface BookRepository extends JpaRepository<Book, Long> {
         + " and (:year is null or b.year = :year)")
     Iterable<Book> findAllByPublisherAndGenreAndYear(@Param("publisher") String publisher, @Param("genre") String genre, @Param("year") String year);
 
-    @Query("SELECT b FROM Book b WHERE (:publisher is null or b.publisher = :publisher)"
-        + " and (:genre is null or b.genre = :genre)"
-        + " and (:genre is null or b.genre = :genre)"
-        + " and (:year is null or b.year = :year)"
+    @Query("SELECT b FROM Book b WHERE (:genre is null or b.genre = :genre)"
         + " and (:publisher is null or b.publisher = :publisher)"
+        + " and (:author is null or b.author = :author)"
+        + " and (:image is null or b.image = :image)"
+        + " and (:title is null or b.genre = :title)"
+        + " and (:subtitle is null or b.genre = :subtitle)"
+        + " and (:year is null or b.year = :year)"
+        + " and (:pages is 0 or b.pages = :pages)"
+        + " and (:isbn is null or b.isbn = :isbn)"
     )
     Iterable<Book> findAll(@Param("genre") String genre, @Param("author") String author,
         @Param("image") String image,@Param("title") String title,@Param("subtitle") String subtitle
