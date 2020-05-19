@@ -45,8 +45,7 @@ public class UserController {
 
     }
 
-    @GetMapping
-    @RequestMapping(params = {"birthdateIni", "birthdateEnd", "name"})
+    @GetMapping("/find")
     public Iterable<User> findByBirthdateAndName(
             @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate birthdateIni,
             @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate birthdateEnd,
