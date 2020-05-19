@@ -12,8 +12,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findFirstByUsernameOrderByIdAsc(String username);
 
-    @Query("SELECT u FROM User u WHERE (cast(:bi as date) is null or u.birthdate >= :bi) and "
-        + "(cast(:bf as date) is null or u.birthdate <= :bf) and (:na <= '' or upper(u.name) = upper(:na))")
+    @Query("select u from User u where ((cast(:bi as date) is null or cast(:bf as date) is null or"
+        + " u.birthdate between :bi and :bf) and (:na is null or lower(u.name) like lower(concat('%',:na,'%'))))")
     Iterable<User> findAllByBirthdateBetweenAndNameIgnoreCaseContaining(@Param("bi") LocalDate birthdateIni,
         @Param("bf") LocalDate birthdateEnd, @Param("na") String name);
 }

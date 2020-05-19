@@ -49,8 +49,7 @@ public class BookController {
         return bookRepository.findFirstByAuthorOrderByIdAsc(author);
     }
 
-    @GetMapping
-    @RequestMapping(params = {"publisher", "genre", "year"})
+    @GetMapping("/find")
     public Iterable<Book> findByPublisherGenreYear(@RequestParam(required = false) String publisher,
             @RequestParam(required = false) String genre,
             @RequestParam(required = false) String year) {
@@ -102,4 +101,21 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.CREATED).body(bookRepository.save(book));
         }
     }
+
+    @GetMapping("/all")
+    public Iterable<Book> findByAll(
+        @RequestParam(required = false) String genre,
+        @RequestParam(required = false) String author,
+        @RequestParam(required = false) String image,
+        @RequestParam(required = false) String title,
+        @RequestParam(required = false) String subtitle,
+        @RequestParam(required = false) String publisher,
+        @RequestParam(required = false) String year,
+        @RequestParam(required = false) int pages,
+        @RequestParam(required = false) String isbn
+
+    ) {
+        return bookRepository.findAll(genre,author,image,title,subtitle,publisher,year,pages,isbn);
+    }
+
 }

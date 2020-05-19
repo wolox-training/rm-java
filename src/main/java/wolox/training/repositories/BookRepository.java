@@ -10,9 +10,22 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findFirstByAuthorOrderByIdAsc(String author);
 
-    @Query("SELECT u FROM Book u WHERE (:pub <= '' or u.publisher = :pub) and (:gen <= '' or"
-        + " u.genre = :gen) and (:yea <= '' or u.year = :yea)")
-    Iterable<Book> findAllByPublisherAndGenreAndYear(@Param("pub") String publisher, @Param("gen") String genre, @Param("yea") String year);
+    @Query("SELECT b FROM Book b WHERE (:publisher is null or b.publisher = :publisher)"
+        + " and (:genre is null or b.genre = :genre)"
+        + " and (:year is null or b.year = :year)")
+    Iterable<Book> findAllByPublisherAndGenreAndYear(@Param("publisher") String publisher, @Param("genre") String genre, @Param("year") String year);
+
+    @Query("SELECT b FROM Book b WHERE (:publisher is null or b.publisher = :publisher)"
+        + " and (:genre is null or b.genre = :genre)"
+        + " and (:genre is null or b.genre = :genre)"
+        + " and (:year is null or b.year = :year)"
+        + " and (:publisher is null or b.publisher = :publisher)"
+    )
+    Iterable<Book> findAll(@Param("genre") String genre, @Param("author") String author,
+        @Param("image") String image,@Param("title") String title,@Param("subtitle") String subtitle
+        ,@Param("publisher") String publisher,@Param("year") String year,@Param("pages") int pages
+        ,@Param("isbn") String isbn);
+
 
     Optional<Book> findFirstByIsbnOrderByIdAsc(String isbn);
 
