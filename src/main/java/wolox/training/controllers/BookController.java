@@ -1,6 +1,7 @@
 package wolox.training.controllers;
 
 import java.util.Optional;
+import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -115,13 +116,8 @@ public class BookController {
         @RequestParam(required = false) String isbn
 
     ) {
-        int iPages;
-        try{
-            iPages = Integer.decode(pages);
-        } catch(NumberFormatException ex){
-            iPages = 0;
-        }
 
+        int iPages = (StringUtils.isNumber(pages)) ? Integer.decode(pages) : 0;
         return bookRepository.findAll(genre,author,image,title,subtitle,publisher,year,iPages,isbn);
     }
 
