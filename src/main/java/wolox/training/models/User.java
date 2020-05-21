@@ -18,10 +18,13 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import wolox.training.exceptions.BookNotFoundException;
 
 @Entity
-public class User {
+@NoArgsConstructor
+public @Data class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,9 +44,6 @@ public class User {
 	@JoinTable(name = "user_book", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "book_id", referencedColumnName = "id"))
 	private List<Book> books = new ArrayList<Book>();
 
-	public long getId() {
-		return id;
-	}
 
 	public User(@NotNull String username, @NotNull String name, @NotNull LocalDate birthdate) {
 		super();
@@ -52,39 +52,8 @@ public class User {
 		this.birthdate = birthdate;
 	}
 
-	public User() {
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public LocalDate getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(LocalDate birthdate) {
-		this.birthdate = birthdate;
-	}
-
 	public List<Book> getBooks() {
 		return (List<Book>) Collections.unmodifiableList(books);
-	}
-
-	public void setBooks(List<Book> books) {
-		this.books = books;
 	}
 
 	public void addBook(Book book) {

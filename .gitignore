@@ -67,6 +67,7 @@ local.properties
 *.iws
 *.iml
 *.ipr
+.idea/*
 
 ### Eclipse Patch ###
 # Eclipse Core
