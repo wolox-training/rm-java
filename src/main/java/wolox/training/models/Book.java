@@ -10,9 +10,12 @@ import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class Book {
+@NoArgsConstructor
+public @Data class Book {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,9 +51,6 @@ public class Book {
 	@ManyToMany(mappedBy = "books")
 	private List<User> users;
 
-	public Book() {
-	}
-
 	public Book(String genre, String author, String image, String title, String subtitle, String publisher, String year,
 	        int pages, String isbn) {
 		this.genre = genre;
@@ -63,81 +63,4 @@ public class Book {
 		this.pages = pages;
 		this.isbn = isbn;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getSubtitle() {
-		return subtitle;
-	}
-
-	public void setSubtitle(String subtitle) {
-		this.subtitle = subtitle;
-	}
-
-	public String getPublisher() {
-		return publisher;
-	}
-
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
-
-	public String getYear() {
-		return year;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-
-	public int getPages() {
-		return pages;
-	}
-
-	public void setPages(int pages) {
-		this.pages = pages;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
 }

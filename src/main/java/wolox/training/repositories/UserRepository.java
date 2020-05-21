@@ -17,3 +17,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Iterable<User> findAllByBirthdateBetweenAndNameIgnoreCaseContaining(@Param("bi") LocalDate birthdateIni,
         @Param("bf") LocalDate birthdateEnd, @Param("na") String name);
 }
+
